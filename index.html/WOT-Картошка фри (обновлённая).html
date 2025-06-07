@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>WOT ВИЗИТ — Чек-лист KFC с диаграммой</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff8f5;
+      margin: 0;
+      padding: 20px;
+      color: #2c2c2c;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .header img {
+      height: 80px;
+    }
+    h1 {
+      flex-grow: 1;
+      text-align: center;
+      color: #d9230f;
+      font-size: 28px;
+      font-weight: 700;
+      text-shadow: 1px 1px 2px #8b0000;
+      margin: 0 20px;
+    }
+    .section {
+      margin-bottom: 25px;
+    }
+    label {
+      display: block;
+      margin: 5px 0;
+      padding: 8px 12px;
+      background: #f1f1f1;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    label:hover {
+      background: #f9e5e5;
+    }
+    input[type="text"], input[type="date"], input[type="time"], select {
+      padding: 8px;
+      width: 100%;
+      margin-top: 4px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #d9230f;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #b51c0b;
+    }
+    /* Цвета для чеков */
+    .checked-green {
+      background-color: #d4edda !important;
+    }
+    .checked-red {
+      background-color: #f8d7da !important;
+    }
+
+    /* Результат и диаграмма */
+    .result-container {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      margin-top: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    #resultText {
+      font-weight: bold;
+      font-size: 1.5em;
+      min-width: 180px;
+      text-align: center;
+      user-select: none;
+    }
+    #colonelImage {
+      width: 110px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    /* Диаграмма */
+    canvas {
+      max-width: 180px;
+      max-height: 180px;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/KFC_Logo.svg/500px-KFC_Logo.svg.png" alt="KFC Logo">
+      <h1>WOT КАРТОФЕЛЬ ФРИ</h1>
+      <img src="https://upload.wikimedia.org/wikipedia/ru/thumb/7/7d/KFC_logo_2024.svg/300px-KFC_logo_2024.svg.png" alt="KFC Logo 2024">
+    </div>
+
+    <div class="section">
+      <label>Проверяющий:<input type="text" id="checker"></label>
+      <label>Сотрудник:<input type="text" id="sotrudnik"></label>
+      <label>Название ресторана:
+        <select id="restaurant">
+          <option value="">Выберите ресторан</option>
+          <option value="ГЭС-5">ГЭС-5 (Лучший ресторан)</option>
+          <option value="Другой">Другой</option>
+        </select>
+      </label>
+      <label>Дата:<input type="date" id="date"></label>
+      <label>Время:<input type="time" id="time"></label>
+    </div>
+
+    <form id="checklistForm">
+      <div class="section">
+        <h2>1. Оценка "Глазами гостя"/Оценить качество готового продукта</h2>
+        <label><input type="checkbox" class="question critical">Упаковка картофеля фри не жирная/не порванная/ не мятая</label>
+        <label><input type="checkbox" class="question critical">Картофель фри горячий и свежий</label>
+        <label><input type="checkbox" class="question critical">Упаковка с картофелем фри визуально полная</label>
+        <label><input type="checkbox" class="question critical">Картофель фри равномерно посолен и перемешал</label>
+        <label><input type="checkbox" class="question critical">Картофель фри золотистого цвета. Отсутствуют темные пятна на картофеле, нет глазков.</label>
+             </div>
+
+      <div class="section">
+        <h2>2.Профессиональная оценка</h2>
+        <label><input type="checkbox" class="question critical">Проверить условия хранения замороженного картофеля фри</label>
+<label><input type="checkbox" class="question critical">Убедиться, что коробки с картофелем фри не мятые и картофель ври находится в рамках сроков годности</label>
+<label><input type="checkbox" class="question critical">Убедиться, что при хранении замороженного картофеля фри в ларе, пакет закрыт, картофель не переморожен</label>
+      </div>
+
+      <div class="section">
+        <h2>3.Оценка процедур приготовления</h2>
+        <label><input type="checkbox" class="question critical"></label>
+ <label><input type="checkbox" class="question critical">Уровень жира соответствует норме</label>
+ <label><input type="checkbox" class="question critical">Настройки на оборудовании верны</label>
+ <label><input type="checkbox" class="question critical">Фасовка замороженного картофеля: Стандарт фасовки картофеля в корзины для приготовления
+минимально количество картофеля 230 г максимально до 680</label>
+ <label><input type="checkbox" class="question critical">Соблюдаются правила загрузки корзин в жаровню</label>
+ <label><input type="checkbox" class="question critical">Соблюдается процедура жарки картофеля фри в жаровне, встряхивание корзины с картофелем через 30 секунд</label>
+ <label><input type="checkbox" class="question critical">Соблюдается процедура посола картофеля
+Солонка держится при посоле на высоте 25 см
+Переворот солонки должен быть полным
+• от 230 г до 500 г(готового картофеля) - 1 переворот солонки,
+• от 500 г до 680 г(готового картофеля) - 2 переворота солонки.
+После посола перемешивается готовый картофель не менее 6 раз</label>
+ <label><input type="checkbox" class="question critical">Соблюдается процедура фасовки картофеля фри по порциям
+• Малая порция 60 г (вместе с упаковкой - 62 г)
+• Стандартная порция 100 г (вместе с упаковкой - 107 г)
+• Большая порция Баскет фри 200 г (вместе с упаковкой - 218 г)</label>
+<label><input type="checkbox" class="question critical">Замерьте температуру готового продукта (температура в толще готового продукта должна быть не менее 62С</label>
+<label><input type="checkbox" class="question critical">Готовая продукция соответствует стандартам EASY CHECK</label>
+<label><input type="checkbox" class="question critical">Соблюдаются сроки хранения готового картофеля фри</label>
+      </div>
+
+      <div class="section">
+        <h2>4.Работа с красочным предложением/Оцените работу кассиров</h2>
+        <label><input type="checkbox" class="question critical">Сотрудники раздачи используют красочное описание картофеля фри при выполнении
+второго момента истины «Дополнительное предложение»</label>
+        <label><input type="checkbox" class="question critical">Сотрудники на кассе контролируют сроки хранения готового картофеля при сборе заказа гостю</label>
+      </div>
+
+  
+      <div class="section">
+        <h2>Другое</h2>
+        <label><input type="checkbox" class="question critical">В ресторане в наличии имеется минимум 2 солонки для посола картофеля фри</label>
+        <label><input type="checkbox" class="question critical">На сотрудника на станции составлен чек-лист «Картофель фри»</label>
+              </div>
+
+      <button type="button" onclick="calculateScore()">Рассчитать результат</button>
+    </form>
+
+    <div class="result-container">
+      <canvas id="resultChart" width="180" height="180"></canvas>
+      <div>
+        <div id="resultText">Результат: 0%</div>
+        <img id="colonelImage" src="https://i.postimg.cc/8zPM6kjC/Whats-App-2025-05-24-01-00-05-b5445bff.jpg" alt="Colonel Sanders" />
+      </div>
+    </div>
+  
+    <div class="section">
+      <table style="width:100%; border-collapse: collapse; border: 1px dotted #aaa;">
+        <tr style="background-color: #d9230f; color: white;">
+          <th colspan="2" style="padding: 8px; text-align: left;">Признание</th>
+        </tr>
+        <tr><td colspan="2"><textarea rows="4" style="width:100%; border:none; resize: vertical;"></textarea></td></tr>
+
+        <tr style="background-color: #d9230f; color: white;">
+          <th style="padding: 8px; text-align: left;">План действий</th>
+          <th style="padding: 8px; text-align: left;">Статус выполнения</th>
+        </tr>
+        <tr>
+          <td><textarea rows="4" style="width:100%; border:none; resize: vertical;"></textarea></td>
+          <td>
+            <select style="width:100%; padding: 6px; border:none;">
+              <option value="">Выберите</option>
+              <option>Не начато</option>
+              <option>В процессе</option>
+              <option>Завершено</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+    </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    window.onload = function() {
+      const now = new Date();
+      document.getElementById('date').value = now.toISOString().slice(0, 10);
+      document.getElementById('time').value = now.toTimeString().slice(0,5);
+    };
+
+    const ctx = document.getElementById('resultChart').getContext('2d');
+    let chart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Отмечено', 'Не отмечено'],
+        datasets: [{
+          data: [0, 100],
+          backgroundColor: ['#5cb85c', '#ddd'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        cutout: '75%',
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: false }
+        }
+      }
+    });
+
+    function calculateScore() {
+      const checkboxes = document.querySelectorAll('#checklistForm input[type="checkbox"]');
+      let total = 0;
+      let checkedCount = 0;
+
+      checkboxes.forEach(box => {
+        total++;
+        // Проверяем, отмечен ли чек
+        if (box.checked) checkedCount++;
+      });
+
+      // Обновляем цвета чеков: зеленый если отмечен, красный если критический и не отмечен
+      checkboxes.forEach(box => {
+        const label = box.parentElement;
+        label.classList.remove('checked-green', 'checked-red');
+        if (box.checked) {
+          label.classList.add('checked-green');
+        } else if (box.classList.contains('critical')) {
+          label.classList.add('checked-red');
+        }
+      });
+
+      const percent = Math.round((checkedCount / total) * 100);
+
+      // Обновляем диаграмму
+      chart.data.datasets[0].data = [checkedCount, total - checkedCount];
+      chart.update();
+
+      const colonelImg = document.getElementById('colonelImage');
+      const resultEl = document.getElementById('resultText');
+
+      if (percent >= 90) {
+        colonelImg.src = 'https://i.postimg.cc/sDJ5xGf8/Whats-App-2025-05-24-01-18-19-1d61d6e6.jpg';
+        resultEl.textContent = `Отлично! Результат: ${percent}% вауу отлично😄`;
+      } else if (percent >= 60) {
+        colonelImg.src = 'https://i.postimg.cc/g2SRq9ZH/Whats-App-2025-05-24-01-00-58-87bd6951.jpg';
+        resultEl.textContent = `Хорошо. Результат: ${percent}% хорошо🙂`;
+      } else {
+        colonelImg.src = 'https://i.postimg.cc/8zPM6kjC/Whats-App-2025-05-24-01-00-05-b5445bff.jpg';
+        resultEl.textContent = `Плохо. Результат: ${percent}% грустно😞`;
+      }
+    }
+  </script>
+</body>
+</html>
